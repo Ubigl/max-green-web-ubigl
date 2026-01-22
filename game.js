@@ -41,6 +41,8 @@ const textures = {
     grass: loadTex('grass.png'), 
     stone: loadTex('stone.png'),
     wood: loadTex('tree.png'),
+    iron: loadTex('iron.png'),
+    gold: loadTex('gold.png'),
     leaves: loadTex('foliage.png')
 };
 
@@ -51,7 +53,9 @@ const materials = [
     new THREE.MeshLambertMaterial({ map: textures.stone }), // 3
     new THREE.MeshLambertMaterial({ map: textures.wood }),  // 4
     new THREE.MeshLambertMaterial({ map: textures.leaves, transparent: true, alphaTest: 0.5 }), // 5
-    new THREE.MeshBasicMaterial({ color: 0xffffff, transparent: true, opacity: 0.8 }) // 6 - Clouds
+    new THREE.MeshBasicMaterial({ color: 0xffffff, transparent: true, opacity: 0.8 }), // 6 - Clouds
+    new THREE.MeshLambertMaterial({ map: textures.iron }), // 7
+    new THREE.MeshLambertMaterial({ map: textures.gold })  // 8
 ];
 
 const itemIcons = {
@@ -59,7 +63,9 @@ const itemIcons = {
     2: './Assets/Dirt.png',
     3: './Assets/stone.png',
     4: './Assets/tree.png',
-    5: './Assets/foliage.png'
+    5: './Assets/foliage.png',
+    7: './Assets/iron.png',
+    8: './Assets/gold.png'
 };
 
 const blockBreakSound = new Audio('./Assets/sound of a block breaking.mp3');
@@ -73,7 +79,7 @@ const inventory = new Array(36).fill(null);
 let cursorItem = null;
 let isSprinting = false;
 
-// --- HAND (Minecraft style) ---
+// --- HAND () ---
 const handScene = new THREE.Scene();
 const handCamera = new THREE.PerspectiveCamera(70, window.innerWidth / window.innerHeight, 0.01, 10);
 handCamera.position.set(0, 0, 0);
@@ -158,7 +164,7 @@ cloudCanvas.width = 256;
 cloudCanvas.height = 256;
 const cloudCtx = cloudCanvas.getContext('2d');
 
-// Draw Minecraft-style cloud pattern
+// Draw  cloud pattern
 cloudCtx.fillStyle = 'rgba(0,0,0,0)';
 cloudCtx.fillRect(0, 0, 256, 256);
 cloudCtx.fillStyle = 'rgba(255,255,255,0.9)';
@@ -170,16 +176,16 @@ const cloudPattern = [
     [0,1,1,1,1,1,1,1,1,0,1,1,1,1,1,1],
     [0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
     [0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0],
-    [0,0,0,1,1,1,1,1,1,1,1,1,1,0,0,0],
-    [0,0,0,0,0,1,1,1,1,1,0,0,0,0,0,0],
+    [0,0,1,1,1,1,1,1,1,1,1,1,1,0,0,0],
+    [0,0,0,0,1,1,0,0,1,1,0,0,0,0,0,0],
     [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
     [0,0,0,0,0,1,1,1,1,0,0,0,0,0,0,0],
-    [0,0,0,0,0,1,1,1,1,1,0,0,1,1,0,0],
+    [0,0,0,0,1,1,1,1,1,1,0,0,1,1,0,0],
     [0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,0],
-    [0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,0],
+    [0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
     [0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
     [0,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0],
-    [0,0,0,1,1,1,1,0,0,1,1,1,1,0,0,0],
+    [0,0,1,0,1,1,1,0,0,1,0,1,1,0,0,0],
     [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
 ];
 
@@ -253,20 +259,30 @@ class Chunk {
     }
 
     generate() {
+        const MIN_Y = -9;
+
         for (let x = 0; x < CHUNK_SIZE; x++) {
             for (let z = 0; z < CHUNK_SIZE; z++) {
                 const wx = this.cx * CHUNK_SIZE + x;
                 const wz = this.cz * CHUNK_SIZE + z;
-                
+
                 const scale = 0.02;
                 const noise = simplex.noise2D(wx * scale, wz * scale);
-                const h = Math.floor((noise + 1) * 8 + 4); 
+                const h = Math.floor((noise + 1) * 8 + 4);
 
-                for (let y = 0; y <= h; y++) {
-                    let type = 2; // Dirt
-                    if (y === h) type = 1; // Grass
-                    if (y < h - 4) type = 3; // Stone
-                    this.setBlockLocal(x, y, z, type);
+                for (let y = MIN_Y; y <= h; y++) {
+                    let type = 2; // dirt по умолчанию
+
+                    if (y === h) type = 1;          // grass
+                    if (y < h - 2) type = 3;        // stone (2 слоя dirt)
+
+                     // руды только в камне
+                    if (type === 3) {
+                       if (y < -2 && Math.random() < 0.08) type = 7; // iron
+                       if (y < -6 && Math.random() < 0.02) type = 8; // gold
+                    }
+
+                this.setBlockLocal(x, y, z, type);
                 }
 
                 if (x > 2 && x < 13 && z > 2 && z < 13 && Math.random() < 0.01 && h > 4) {
