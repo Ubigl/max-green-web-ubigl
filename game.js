@@ -259,7 +259,7 @@ class Chunk {
     }
 
     generate() {
-        const MIN_Y = -9;
+        const MIN_Y = -11;
 
         for (let x = 0; x < CHUNK_SIZE; x++) {
             for (let z = 0; z < CHUNK_SIZE; z++) {
@@ -274,7 +274,7 @@ class Chunk {
                     let type = 2; // dirt по умолчанию
 
                     if (y === h) type = 1;          // grass
-                    if (y < h - 2) type = 3;        // stone (2 слоя dirt)
+                    if (y < h - 2) type = 4;        // stone (2 слоя dirt)
 
                      // руды только в камне
                     if (type === 3) {
