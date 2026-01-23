@@ -273,8 +273,10 @@ class Chunk {
                 for (let y = MIN_Y; y <= h; y++) {
                     let type = 2; // dirt по умолчанию
 
-                    if (y === h) type = 1;          // grass
-                    if (y < h - 2) type = 2;        // stone (2 слоя dirt)
+                    if (y === h) type = 1;           // grass
+                    else if (y >= h - 2) type = 2;   // 2 слоя dirt
+                    else type = 3;                   // stone
+                    
                     if (y === -7) type = 8;         // gold
 
                      // руды только в камне
