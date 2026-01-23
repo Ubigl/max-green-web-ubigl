@@ -274,12 +274,13 @@ class Chunk {
                     let type = 2; // dirt по умолчанию
 
                     if (y === h) type = 1;          // grass
-                    if (y < h - 2) type = 4;        // stone (2 слоя dirt)
+                    if (y < h - 2) type = 2;        // stone (2 слоя dirt)
+                    if (y === -7) type = 8;         // gold
 
                      // руды только в камне
-                    if (type === 4) {
-                       if (y < -2 && Math.random() < 0.5) type = 7; // iron
-                       if (y < -6 && Math.random() < 0.2) type = 8; // gold
+                    if (type === 3) {
+                       if (y < -8 && Math.random() < 0.5) type = 7; // iron
+                       if (y < -9 && Math.random() < 0.2) type = 8; // gold
                     }
 
                 this.setBlockLocal(x, y, z, type);
