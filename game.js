@@ -342,7 +342,9 @@ class Chunk {
         this.meshGroup.clear();
         
         const matrices = {};
-        for(let i=1; i<=6; i++) matrices[i] = [];
+        for (let i = 1; i < materials.length; i++) {
+            matrices[i] = [];
+        }
 
         const dummy = new THREE.Object3D();
 
