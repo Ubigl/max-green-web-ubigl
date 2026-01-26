@@ -41,8 +41,8 @@ const textures = {
     grass: loadTex('grass.png'), 
     stone: loadTex('stone.png'),
     wood: loadTex('tree.png'),
-    iron: loadTex('iron.png'),
-    gold: loadTex('gold.png'),
+    iron: loadTex('Iron.png'),
+    gold: loadTex('Gold.png'),
     leaves: loadTex('foliage.png')
 };
 
@@ -64,8 +64,8 @@ const itemIcons = {
     3: './Assets/stone.png',
     4: './Assets/tree.png',
     5: './Assets/foliage.png',
-    7: './Assets/iron.png',
-    8: './Assets/gold.png'
+    7: './Assets/Iron.png',
+    8: './Assets/Gold.png'
 };
 
 const blockBreakSound = new Audio('./Assets/sound of a block breaking.mp3');
@@ -277,12 +277,11 @@ class Chunk {
                     if (y === h)    type = 1; // grass
 
                         // фиксированный слой золота
-                    if (y === -7) type = 8;
+                    if (y === -7) type = 3;
 
                      // руды только в камне
                     if (type === 3) {
                        if (y < -8 && Math.random() < 0.5) type = 7; // iron
-                       if (y < -9 && Math.random() < 0.2) type = 8; // gold
                     }
 
                     this.setBlockLocal(x, y, z, type);
