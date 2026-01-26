@@ -42,6 +42,8 @@ const textures = {
     stone: loadTex('stone.png'),
     wood: loadTex('tree.png'),
     iron: loadTex('Iron.png'),
+    ruby: loadTex('ruby.png'),
+    emerald: loadTex('emerald.png'),
     gold: loadTex('Gold.png'),
     leaves: loadTex('foliage.png')
 };
@@ -55,7 +57,9 @@ const materials = [
     new THREE.MeshLambertMaterial({ map: textures.leaves, transparent: true, alphaTest: 0.5 }), // 5
     new THREE.MeshBasicMaterial({ color: 0xffffff, transparent: true, opacity: 0.8 }), // 6 - Clouds
     new THREE.MeshLambertMaterial({ map: textures.iron }), // 7
-    new THREE.MeshLambertMaterial({ map: textures.gold })  // 8
+    new THREE.MeshLambertMaterial({ map: textures.ruby }), // 8
+    new THREE.MeshLambertMaterial({ map: textures.emerald }), // 9
+    new THREE.MeshLambertMaterial({ map: textures.gold })  // 10
 ];
 
 const itemIcons = {
@@ -65,7 +69,9 @@ const itemIcons = {
     4: './Assets/tree.png',
     5: './Assets/foliage.png',
     7: './Assets/Iron.png',
-    8: './Assets/Gold.png'
+    8: './Assets/ruby.png',
+    9: './Assets/emerald.png',
+    10: './Assets/Gold.png'
 };
 
 const blockBreakSound = new Audio('./Assets/sound of a block breaking.mp3');
@@ -277,11 +283,11 @@ class Chunk {
                     if (y === h)    type = 1; // grass
 
                         // фиксированный слой золота
-                    if (y === -7) type = 3;
+                    if (y === -5) type = 10;
 
                      // руды только в камне
                     if (type === 3) {
-                       if (y < -8 && Math.random() < 0.5) type = 7; // iron
+                       if (y < -7 && Math.random() < 0.5) type = 7; // iron
                     }
 
                     this.setBlockLocal(x, y, z, type);
