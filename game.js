@@ -290,10 +290,10 @@ class Chunk {
 
                      // руды только в камне
                     if (type === 3) {
-                       if (y < -7 && Math.random() < 0.3) type = 8; // ruby
-                       if (y < -9 && Math.random() < 0.5) type = 11; // gold
-                       if (y < -10 && Math.random() < 0.2) type = 10;
-                       if (y < -15 && Math.random() < 0.5) type = 9;
+                       if (y < -7 && Math.random() < 0.1) type = 8; // ruby
+                       if (y < -9 && Math.random() < 0.25) type = 11; // gold
+                       if (y < -10 && Math.random() < 0.03) type = 10;
+                       if (y < -15 && Math.random() < 0.05) type = 9;
                         
                     }
 
