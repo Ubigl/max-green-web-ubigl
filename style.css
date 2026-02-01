@@ -42,7 +42,7 @@ body {
     text-align: center;
     color: white;
     width: 400px;
-    box-shadow: 0 0 20px rgba(0,0,0,0.5);
+    box-shadow: 0 0 20px rgba(60, 60, 60, 0.95);
 }
 
 #menu-box h1 {
@@ -175,3 +175,4 @@ body {
     background: #a0a0a0;
 
 }
+
