@@ -26,7 +26,7 @@ body {
     position: absolute;
     width: 100%;
     height: 100%;
-    background-color: rgba(0,0,0,0.7);
+    background-color: rgba(80, 20, 100, 0.75);
     display: flex;
     justify-content: center;
     align-items: center;
@@ -35,7 +35,7 @@ body {
 }
 
 #menu-box {
-    background: rgba(0, 0, 0, 0.8);
+    background: rgba(30, 30, 60, 0.9);
     padding: 40px;
     border: 4px solid #fff;
     border-radius: 10px;
@@ -173,4 +173,5 @@ body {
 
 #inventory-grid .slot:hover, #inventory-hotbar-grid .slot:hover {
     background: #a0a0a0;
+
 }
