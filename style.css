@@ -176,3 +176,101 @@ body {
 
 }
 
+/* === UNIQUE MENU STYLE (ONLY CSS, NO OTHER FILES) === */
+
+#menu-overlay {
+    background: radial-gradient(
+        circle at top,
+        rgba(90, 120, 255, 0.35),
+        rgba(30, 20, 80, 0.85)
+    );
+    animation: menuFadeIn 1.2s ease-out;
+}
+
+#menu-box {
+    background: linear-gradient(
+        145deg,
+        rgba(90, 110, 255, 0.85),
+        rgba(50, 30, 120, 0.95)
+    );
+    border: 3px solid rgba(255,255,255,0.25);
+    box-shadow:
+        0 0 25px rgba(120,150,255,0.4),
+        inset 0 0 30px rgba(255,255,255,0.08);
+    animation: menuFloat 4s ease-in-out infinite;
+}
+
+/* Title glow */
+#menu-box h1 {
+    color: #e6ebff;
+    text-shadow:
+        0 0 8px rgba(180,200,255,0.6),
+        0 0 18px rgba(120,150,255,0.4);
+}
+
+/* PLAY BUTTON – soft energy style */
+#resume-btn {
+    background: linear-gradient(
+        135deg,
+        #6ef3c5,
+        #4fa3ff
+    );
+    color: #0a1a2f;
+    font-weight: bold;
+    letter-spacing: 1px;
+    box-shadow:
+        0 0 15px rgba(110,243,197,0.6),
+        0 0 25px rgba(79,163,255,0.4);
+    position: relative;
+    overflow: hidden;
+}
+
+/* Button shimmer */
+#resume-btn::before {
+    content: "";
+    position: absolute;
+    top: -50%;
+    left: -100%;
+    width: 200%;
+    height: 200%;
+    background: linear-gradient(
+        120deg,
+        transparent,
+        rgba(255,255,255,0.4),
+        transparent
+    );
+    animation: shine 3s infinite;
+}
+
+#resume-btn:hover {
+    transform: scale(1.05);
+    box-shadow:
+        0 0 25px rgba(110,243,197,0.8),
+        0 0 40px rgba(79,163,255,0.6);
+}
+
+/* Subtle UI text */
+.controls-info {
+    color: rgba(220,230,255,0.8);
+}
+
+/* Animations */
+@keyframes menuFloat {
+    0%   { transform: translateY(0); }
+    50%  { transform: translateY(-6px); }
+    100% { transform: translateY(0); }
+}
+
+@keyframes menuFadeIn {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+}
+
+@keyframes shine {
+    0% { left: -100%; }
+    60% { left: 100%; }
+    100% { left: 100%; }
+}
+
+
+
